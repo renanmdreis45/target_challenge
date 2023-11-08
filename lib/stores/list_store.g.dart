@@ -1,17 +1,17 @@
 part of 'list_store.dart';
 
 mixin _$ListStore on _ListStore, Store {
-  final _$newTodoTitleAtom = Atom(name: '_ListStore.newTodoTitle');
+  final _$newNoteTitleAtom = Atom(name: '_ListStore.newNoteTitle');
 
   @override
   String get newNote {
-    _$newTodoTitleAtom.reportRead();
+    _$newNoteTitleAtom.reportRead();
     return super.newNote;
   }
 
   @override
   set newNote(String value) {
-    _$newTodoTitleAtom.reportWrite(value, super.newNote, () {
+    _$newNoteTitleAtom.reportWrite(value, super.newNote, () {
       super.newNote = value;
     });
   }
@@ -23,19 +23,31 @@ mixin _$ListStore on _ListStore, Store {
     return _$getListAsyncAction.run(() => super.getList());
   }
 
-  final _$addTodoAsyncAction = AsyncAction('_ListStore.addNote');
+  final _$addNoteAsyncAction = AsyncAction('_ListStore.addNote');
 
   @override
-  Future<void> addTodo() {
-    return _$addTodoAsyncAction.run(() => super.addNote());
+  Future<void> addNote() {
+    return _$addNoteAsyncAction.run(() => super.addNote());
   }
 
   final _$_ListStoreActionController = ActionController(name: '_ListStore');
 
+
   @override
-  void setNewTodoTitle(String value) {
-    final _$actionInfo = _$_ListStoreActionController.startAction(
-        name: '_ListStore.setNewNote');
+  void removeNote(NoteStore note) {
+    final _$actionInfo =
+        _$_ListStoreActionController.startAction(name: '_ListStore.removeNote');
+    try {
+      return super.removeNote(note);
+    } finally {
+      _$_ListStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNewNote(String value) {
+    final _$actionInfo =
+        _$_ListStoreActionController.startAction(name: '_ListStore.setNewNote');
     try {
       return super.setNewNote(value);
     } finally {

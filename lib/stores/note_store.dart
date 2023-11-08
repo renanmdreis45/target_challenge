@@ -1,22 +1,17 @@
 import 'package:mobx/mobx.dart';
+import 'package:target_technical_challenge/models/note_model.dart';
 
 part 'note_store.g.dart';
 
 class NoteStore = _NoteStoreBase with _$NoteStore;
 
 abstract class _NoteStoreBase with Store {
-  TodoNote todo;
+  Note note;
 
-  _NoteStoreBase(this.todo);
-
-  @observable
-  bool done = false;
+  _NoteStoreBase(this.note);
 
   @action
-  Future<void> updateNote() async {
-    done = !done;
-    todo.done == 1 ? todo.done = 0 : todo.done = 1;
-
-    await db.update(todo);
+  Future<void> updateNote(String newNote) async {
+    note.title = newNote;
   }
 }

@@ -7,8 +7,8 @@ mixin _$NoteStore on _NoteStoreBase, Store {
   final _$updateNoteAsyncAction = AsyncAction('_NoteStoreBase.updateNote');
 
   @override
-  Future<void> updateNotes() {
-    return _$updateNoteAsyncAction.run(() => super.updateNote());
+  Future<void> updateNote(String newNote) {
+    return _$updateNoteAsyncAction.run(() => super.updateNote(newNote));
   }
 
 }
