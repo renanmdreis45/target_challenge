@@ -38,6 +38,7 @@ dependencies:
   mobx: ^2.2.1
   validators2: ^5.0.0
   flutter_mobx: ^2.1.1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

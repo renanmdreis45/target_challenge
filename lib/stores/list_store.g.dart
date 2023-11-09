@@ -15,14 +15,6 @@ mixin _$ListStore on _ListStore, Store {
       super.newNote = value;
     });
   }
-
-  final _$getListAsyncAction = AsyncAction('_ListStore.getList');
-
-  @override
-  Future<void> getList() {
-    return _$getListAsyncAction.run(() => super.getList());
-  }
-
   final _$addNoteAsyncAction = AsyncAction('_ListStore.addNote');
 
   @override
@@ -34,11 +26,11 @@ mixin _$ListStore on _ListStore, Store {
 
 
   @override
-  void removeNote(NoteStore note) {
+  void removeNote(int index) {
     final _$actionInfo =
         _$_ListStoreActionController.startAction(name: '_ListStore.removeNote');
     try {
-      return super.removeNote(note);
+      return super.removeNote(index);
     } finally {
       _$_ListStoreActionController.endAction(_$actionInfo);
     }

@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:mobx/mobx.dart';
 import 'package:target_technical_challenge/stores/note_store.dart';
 import 'package:target_technical_challenge/models/note_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'list_store.g.dart';
 
 class ListStore = _ListStore with _$ListStore;
@@ -14,21 +17,19 @@ abstract class _ListStore with Store {
 
   ObservableList<NoteStore> noteList = ObservableList<NoteStore>();
 
-  @action
-  Future<void> getList() async {
-    // final allNotes = await db.todoNotes();
-  }
+  late SharedPreferences sp;
+
+  String NOTES_KEY = "NOTES_LIST";
 
   @action
   Future<void> addNote() async {
-    // await db.insert(Note(title: newNote));
     noteList.insert(0, NoteStore(Note(title: newNote)));
 
     newNote = "";
   }
 
   @action
-  void removeNote(NoteStore note) {
-    noteList.removeWhere((x) => x == note);
+  void removeNote(int index) {
+    noteList.removeAt(index);
   }
 }

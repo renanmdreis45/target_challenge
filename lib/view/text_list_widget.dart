@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:target_technical_challenge/models/note_model.dart';
 import 'package:target_technical_challenge/stores/list_store.dart';
 import 'package:target_technical_challenge/stores/login_store.dart';
+import 'package:target_technical_challenge/stores/note_store.dart';
 
 class ListScreen extends StatefulWidget {
   static String route = "/list";
@@ -13,18 +18,54 @@ class ListScreen extends StatefulWidget {
 
 class _ListState extends State<ListScreen> {
   ListStore _listStore = ListStore();
+  late SharedPreferences sp;
 
-  final myController = TextEditingController();
+  String NOTES_KEY = "NOTES_LIST";
+
   final fieldController = TextEditingController();
+  late FocusNode textFocusNode;
+  int selectedIndex = -1;
+
+  getSharedPreferences() async {
+    sp = await SharedPreferences.getInstance();
+    readFromSp();
+  }
+
+  saveIntoSp() {
+    List<String> notesListString = _listStore.noteList
+        .map((note) => jsonEncode(note.note.toJson()))
+        .toList();
+
+    sp.setStringList(NOTES_KEY, notesListString);
+  }
+
+  readFromSp() {
+    List<String>? notesListString = sp.getStringList(NOTES_KEY);
+
+    if (notesListString != null) {
+      final notes = notesListString
+          .map((note) => Note.fromJson(json.decode(note)))
+          .toList();
+
+      final allNotes = notes.map((note) => NoteStore(note));
+
+      _listStore.noteList.addAll(allNotes);
+    }
+
+    setState(() {});
+  }
 
   @override
   void initState() {
-    _listStore.getList();
+    getSharedPreferences();
+    textFocusNode = FocusNode();
+    super.initState();
   }
 
   @override
   void dispose() {
-    myController.dispose();
+    fieldController.dispose();
+    textFocusNode.dispose();
     super.dispose();
   }
 
@@ -71,42 +112,40 @@ class _ListState extends State<ListScreen> {
                               child: Row(
                                 children: [
                                   Expanded(
-                                    child: TextField(
-                                      controller: fieldController,
-                                      onSubmitted: (String str) {
-                                        fieldController.clear();
-                                        note.updateNote(str);
-                                      },
-                                      decoration: InputDecoration(
-                                          hintText: title,
-                                          filled: true,
-                                          fillColor: Colors.white,
-                                          // contentPadding: EdgeInsets.only(
-                                          //     left: 14.0, bottom: 8.0, top: 8.0),
-                                          focusedBorder:
-                                              const OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                          enabledBorder:
-                                              const UnderlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.white),
-                                          ),
-                                          suffixIcon: const Icon(
-                                            Icons.edit,
-                                            color: Colors.black,
-                                            size: 32,
-                                          )),
+                                    child: Text(
+                                      title!,
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 18),
                                     ),
                                   ),
                                   const SizedBox(
                                     width: 5,
                                   ),
                                   IconButton(
-                                      onPressed: () =>
-                                          _listStore.removeNote(note),
-                                      icon: Icon(
+                                      onPressed: () {
+                                        fieldController.text = title;
+                                        textFocusNode.requestFocus();
+                                        setState(() {
+                                          selectedIndex = index;
+                                        });
+                                      },
+                                      icon: const Icon(
+                                        Icons.edit,
+                                        color: Colors.black,
+                                        size: 32,
+                                      )),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _listStore.removeNote(index);
+                                        });
+
+                                        saveIntoSp();
+                                      },
+                                      icon: const Icon(
                                         Icons.close,
                                         color: Colors.red,
                                         size: 32,
@@ -125,14 +164,9 @@ class _ListState extends State<ListScreen> {
                 ),
                 TextField(
                   textAlign: TextAlign.center,
+                  focusNode: textFocusNode,
+                  controller: fieldController,
                   onChanged: _listStore.setNewNote,
-                  onSubmitted: (String str) {
-                    print("entrou");
-                    if (_listStore.newNote != '') {
-                      myController.clear();
-                      _listStore.addNote();
-                    }
-                  },
                   decoration: InputDecoration(
                       filled: true,
                       fillColor: Colors.white,
@@ -152,13 +186,49 @@ class _ListState extends State<ListScreen> {
                         borderRadius: BorderRadius.circular(10),
                       )),
                 ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          //
+                          String note = fieldController.text.trim();
+                          if (note.isNotEmpty) {
+                            setState(() {
+                              fieldController.text = '';
+                              _listStore.addNote();
+                            });
+                          }
+                          //
+                        },
+                        child: const Text('Adicionar', style: TextStyle(color: Colors.green),)),
+                    ElevatedButton(
+                        onPressed: () {
+                          //
+                          String note = fieldController.text.trim();
+                          if (note.isNotEmpty) {
+                            setState(() {
+                              _listStore.noteList[selectedIndex]
+                                  .updateNote(note);
+                              selectedIndex = -1;
+                              fieldController.text = '';
+                            });
+
+                            saveIntoSp();
+                          }
+                          //
+                        },
+                        child: const Text('Atualizar', style: TextStyle(color: Colors.green),)),
+                  ],
+                ),
                 const SizedBox(
-                  height: 70,
+                  height: 50,
                 ),
                 const Text(
                   'Política de privacidade',
                   style: TextStyle(color: Colors.white, fontSize: 18),
-                )
+                ),
               ],
             ),
           ),
