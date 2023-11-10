@@ -1,16 +1,53 @@
-# target_technical_challenge
+# Target Sistemas Challenge
 
-A new Flutter project.
+Repositório referente ao desafio de mobile da Target Sistemas.
 
-## Getting Started
+  O desafio foi feito utilizando Flutter como tecnologia exigida. 
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
+# Decisões arquiteturais, conceitos e premisssas
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+  Para o gerenciamento de estados e da lógica do sistema como um todo foi utilizado o Mobx, onde cada store tem uma responsabilidade única. Nesse caso, foram definidas 3 stores, uma para o login, uma para a entidade Note e outra para a listagem de Notes onde cada estado reativo é definido pelo decorator Observable, cada método responsável por alterações nesse estados são definidos com o decorator Action. Como a store é definida em uma classe abstrata, ela não pode ser instanciadas, apenas definem o comportamento o padrão daquela store. Para isso, criei Mixins para juntar as 2 classes de cada store em uma só, fornecendo ao aplicativo um único acesso para aquela store, com a invocação de seus métodos e utilização de estados.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  Em relação às boas práticas, como cada store tem suas devidas atribuições únicas, o princípio da responsabilidade única é mantido nesse caso. Como não foi preciso injetar uma Store dentro de outra, não vi necessidade de criar interfaces nesse caso com o intuito de desacoplamento.
+
+  Além disso, a única entidade utilizada nas stores e na lógica como um todo é a note_model definidas nos Models. Como o intuito da tela de login era a validação dos campos e redirecionamento para a tela de listagem, caso a validação seja feita corretamente. Optei por não criar models para a tela de Login. Porém, a lógica de validações dos campos do Login também foi feita utilizando Mobx.
+
+  Os métodos de leitura e salvamento dos dados no cache utilizando SharedPreferences foram feitos no próprio widget de listagem de notas. Caso optasse por criar uma api externa, separaria os métodos resposáveis pelas requisições e armazenamento em cache em Services. Mas como foram utilizados poucos métodos para comunicação com a entidade SharedPreferences decidi por inserir eles no próprio widget de listagem.
+
+ # Como rodar a aplicação
+  
+  - É necessário instalar o [Flutter](https://docs.flutter.dev/get-started/install)  e o [Dart](https://dart.dev/get-dart)
+        
+
+  - É preciso instalar o [Android Studio](https://developer.android.com/studio) também
+
+  Após instalar, rodar os comandos:
+
+- Entrar na pasta da raiz do projeto e rodar o seguinte comando para instalar todas as dependências
+
+```
+
+```
+
+- Rodar a aplicação: 
+
+```
+
+```
+
+- Acessar a aplicação
+
+```
+
+```
+
+# Rodando a aplicação
+
+
+
+
+
+
+# Considerações finais
+
