@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:target_technical_challenge/stores/login_store.dart';
+import 'package:target_technical_challenge/utils/functions.dart';
 import 'package:target_technical_challenge/view/text_list_widget.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -154,9 +155,12 @@ class _LoginState extends State<LoginScreen> {
                   const SizedBox(
                     height: 50,
                   ),
-                  const Text(
-                    'Política de privacidade',
-                    style: TextStyle(color: Colors.white),
+                  const TextButton(
+                    onPressed: launchURL,
+                    child: Text(
+                      'Política de privacidade',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   )
                 ],
               ),

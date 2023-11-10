@@ -7,6 +7,7 @@ import 'package:target_technical_challenge/models/note_model.dart';
 import 'package:target_technical_challenge/stores/list_store.dart';
 import 'package:target_technical_challenge/stores/login_store.dart';
 import 'package:target_technical_challenge/stores/note_store.dart';
+import 'package:target_technical_challenge/utils/functions.dart';
 
 class ListScreen extends StatefulWidget {
   static String route = "/list";
@@ -225,9 +226,12 @@ class _ListState extends State<ListScreen> {
                 const SizedBox(
                   height: 50,
                 ),
-                const Text(
-                  'Política de privacidade',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                const TextButton(
+                  onPressed: launchURL,
+                  child: Text(
+                    'Política de privacidade',
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
                 ),
               ],
             ),
