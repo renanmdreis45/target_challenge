@@ -165,6 +165,7 @@ class _ListState extends State<ListScreen> {
                 ),
                 TextField(
                   textAlign: TextAlign.center,
+                  autofocus: true,
                   focusNode: textFocusNode,
                   controller: fieldController,
                   onChanged: _listStore.setNewNote,
