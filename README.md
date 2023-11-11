@@ -20,8 +20,8 @@ Repositório referente ao desafio de mobile da Target Sistemas.
  # Como rodar a aplicação
   
   - É necessário instalar o [Flutter](https://docs.flutter.dev/get-started/install)  e o [Dart](https://dart.dev/get-dart)
-        Dart utilizado: 3.2.0
-        Flutter utilizado: 3.13.0
+    - Dart utilizado: 3.2.0
+    - Flutter utilizado: 3.13.0
 
   - É preciso instalar o [Android Studio](https://developer.android.com/studio) também
 
