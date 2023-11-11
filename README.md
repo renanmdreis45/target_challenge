@@ -45,6 +45,7 @@ Repositório referente ao desafio de mobile da Target Sistemas.
 
 Aqui está um vídeo demonstrativo da aplicação:
 
+https://github.com/renanmdreis45/target_challenge/assets/85807389/52d18da2-0c85-4ab7-a68e-10164a4a157c
 
 # Melhorias Futuras
 
