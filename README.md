@@ -20,7 +20,8 @@ Repositório referente ao desafio de mobile da Target Sistemas.
  # Como rodar a aplicação
   
   - É necessário instalar o [Flutter](https://docs.flutter.dev/get-started/install)  e o [Dart](https://dart.dev/get-dart)
-        
+        Dart utilizado: 3.2.0
+        Flutter utilizado: 3.13.0
 
   - É preciso instalar o [Android Studio](https://developer.android.com/studio) também
 
@@ -37,21 +38,17 @@ Repositório referente ao desafio de mobile da Target Sistemas.
 
 ```
   flutter run
-  
-```
-
-- Acessar a aplicação
-
-```
 
 ```
 
 # Rodando a aplicação
 
+Aqui está um vídeo demonstrativo da aplicação:
 
 
+# Melhorias Futuras
 
-
+No store do login foi criado alguns métodos para uma autenticação futura do usuário. Além disso, irei implementar alguns testes unitários, principalmente nos métodos das stores.
 
 # Considerações finais
-
+Foi um projeto bom para aplicar conhecimentos do gerenciador de estados Mobx, até então tinha mais afinidade com o gerenciador de estados Bloc, então foi bastante proveitoso para eu me aprofundar nos conceitos e no fluxo do Mobx, ao qual considero bem intuitivo para aprender.
