@@ -56,6 +56,15 @@ class _ListState extends State<ListScreen> {
     setState(() {});
   }
 
+  String? get _errorText {
+    
+    final text = fieldController.value.text;
+    
+    if (text.isEmpty) {
+      return 'Esse campo não pode estar vazio';
+    }
+  }
+
   @override
   void initState() {
     getSharedPreferences();
@@ -170,6 +179,7 @@ class _ListState extends State<ListScreen> {
                   controller: fieldController,
                   onChanged: _listStore.setNewNote,
                   decoration: InputDecoration(
+                      errorText: _errorText,
                       filled: true,
                       fillColor: Colors.white,
                       hintText: 'Digite seu texto',
@@ -201,10 +211,15 @@ class _ListState extends State<ListScreen> {
                               fieldController.text = '';
                               _listStore.addNote();
                             });
+                          } else {
+                            _errorText;
                           }
                           //
                         },
-                        child: const Text('Adicionar', style: TextStyle(color: Colors.green),)),
+                        child: const Text(
+                          'Adicionar',
+                          style: TextStyle(color: Colors.green),
+                        )),
                     ElevatedButton(
                         onPressed: () {
                           //
@@ -218,10 +233,15 @@ class _ListState extends State<ListScreen> {
                             });
 
                             saveIntoSp();
+                          } else {
+                            _errorText;
                           }
                           //
                         },
-                        child: const Text('Atualizar', style: TextStyle(color: Colors.green),)),
+                        child: const Text(
+                          'Atualizar',
+                          style: TextStyle(color: Colors.green),
+                        )),
                   ],
                 ),
                 const SizedBox(
