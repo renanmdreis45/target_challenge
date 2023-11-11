@@ -43,26 +43,19 @@ abstract class _LoginStore with Store {
 
   @action
   Future validateUsername(String value) async {
+    // var arrayUsername = value.split('');
+
+    // var lastChar = arrayUsername[value.length - 1];
+
     if (isNull(value) || value.isEmpty) {
       error.username = 'Esse campo é obrigatório';
       return;
     } else if (value.length > 20) {
       error.username = 'Limite de 20 caracteres excedido';
       return;
-    }
-
-    try {
-      usernameCheck = ObservableFuture(checkValidUsername(value));
-
-      error.username = null;
-
-      final isValid = await usernameCheck;
-      if (!isValid) {
-        error.username = 'Username cannot be "admin"';
-        return;
-      }
-    } on Object catch (_) {
-      error.username = null;
+    } else if (value.split('')[value.length - 1] == ' ') {
+      error.username = 'Esse campo não pode terminar com espaço vazio';
+      return;
     }
 
     error.username = null;
@@ -82,11 +75,14 @@ abstract class _LoginStore with Store {
       error.password = "Esse campo não pode ter menos que 2 caracteres";
       return;
     } else if (value.length > 20) {
-      error.password = "Esse campo não pode ter mais que 20 caracteres";
+      error.password = "Limite de 20 caracteres excedido";
       return;
-    } else {
-      error.password = null;
+    } else if (value.split('')[value.length - 1] == ' ') {
+      error.password = "Esse campo não pode terminar com espaço vazio";
+      return;
     }
+
+    error.password = null;
   }
 
   Future<bool> checkValidUsername(String value) async {

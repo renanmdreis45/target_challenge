@@ -26,6 +26,8 @@ class _LoginState extends State<LoginScreen> {
     super.dispose();
   }
 
+  
+
   @override
   Widget build(BuildContext context) => Scaffold(
           body: Center(
@@ -147,7 +149,6 @@ class _LoginState extends State<LoginScreen> {
 
                           if (store.error.username == null &&
                               store.error.password == null) {
-                            print("Acesso válido");
                             Navigator.pushNamed(context, ListScreen.route);
                           }
                         }),

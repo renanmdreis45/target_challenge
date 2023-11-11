@@ -15,7 +15,7 @@ Repositório referente ao desafio de mobile da Target Sistemas.
 
   Os métodos de leitura e salvamento dos dados no cache utilizando SharedPreferences foram feitos no próprio widget de listagem de notas. Caso optasse por criar uma api externa, separaria os métodos resposáveis pelas requisições e armazenamento em cache em Services. Mas como foram utilizados poucos métodos para comunicação com a entidade SharedPreferences decidi por inserir eles no próprio widget de listagem.
 
-  Se tratando do aplicativo, na tela de Login foram feitas as validações para cada caso definido nos requisitos do Desafio, uma vez que os campos sejam preenchidos de forma correta, o usuário é redirecionado para a tela de listagem de notas, onde é feito basicamente um CRUD. É possível criar um novo texto, editar, excluir e visualizar a listagem dos textos. Foram inseridos dois botões de adicionar e editar para diferenciar a utilização do input de texto.
+  Se tratando do aplicativo, na tela de Login foram feitas as validações para cada caso definido nos requisitos do Desafio, uma vez que os campos sejam preenchidos de forma correta, o usuário é redirecionado para a tela de listagem de notas, onde é feito basicamente um CRUD. É possível criar um novo texto, editar, excluir e visualizar a listagem dos textos. Foram inseridos dois botões de adicionar e editar para diferenciar a utilização do input de texto. Todas as informações são armazenadas no cache local por meio do uso da lib shared_preferences, dessa forma, quando o usuário bloqueia a tela ou sai do aplicativo e entra novamente, os dados permanecem lá, como pode ser visualizado no vídeo de desmontração abaixo.
 
  # Como rodar a aplicação
   
@@ -29,13 +29,15 @@ Repositório referente ao desafio de mobile da Target Sistemas.
 - Entrar na pasta da raiz do projeto e rodar o seguinte comando para instalar todas as dependências
 
 ```
+  flutter pub get
 
 ```
 
 - Rodar a aplicação: 
 
 ```
-
+  flutter run
+  
 ```
 
 - Acessar a aplicação
